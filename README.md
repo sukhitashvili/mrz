@@ -1,2 +1,2 @@
 # mrz
-See the function in get_document.py
+See the functions in get_document.py

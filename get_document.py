@@ -1,4 +1,5 @@
 import os
+from typing import Tuple
 
 import cv2
 import names
@@ -10,13 +11,7 @@ pass_img_dir = os.listdir('./images/passports')
 id_img_dir = os.listdir('./images/ids')
 
 
-def passport(img_name):
-    # ind = np.random.randint(low=0, high=len(pass_img_dir))
-    # img_path = pass_img_dir[ind]
-    img = cv2.imread(img_name)
-    height = 350
-    width = 600
-    img = cv2.resize(img, (width, height))
+def passport(img, top_left: Tuple = (130, 350)):
     random_fr_name = names.get_first_name()
     random_ls_name = names.get_last_name()
     p_number = random_number(7)
@@ -25,7 +20,7 @@ def passport(img_name):
     expiry_date = random_date()
     id = 'ID' + random_number(8)
     img_with_mrz = add_mrz_passport(img,
-                                    coords=(80, height - 50),
+                                    coords=top_left,
                                     doc_type='P',
                                     # country=c_code,
                                     surname=random_ls_name,
@@ -41,13 +36,7 @@ def passport(img_name):
     return img_with_mrz
 
 
-def id_cards(img_name):
-    # ind = np.random.randint(low=0, high=len(pass_img_dir))
-    # img_path = id_img_dir[ind]
-    img = cv2.imread(img_name)
-    height = 350
-    width = 600
-    img = cv2.resize(img, (width, height))
+def id_cards(img, top_left: Tuple = (130, 350)):
     random_fr_name = names.get_first_name()
     random_ls_name = names.get_last_name()
     doc_number = random_char(3) + random_number(6)
@@ -55,7 +44,7 @@ def id_cards(img_name):
     gen = genre()
     expiry_date = random_date()
     img_with_mrz = add_mrz_id_card(img,
-                                   coords=(130, height - 60),
+                                   coords=top_left,
                                    doc_type='ID',
                                    country='ESP',
                                    doc_number=doc_number,
@@ -73,5 +62,8 @@ def id_cards(img_name):
 if __name__ == '__main__':
     for name in id_img_dir:
         img_path = os.path.join('images', 'passports', name)
-        img = passport(img_path)
-        cv2.imwrite('./images/results/' + name, img)
+        img = cv2.imread(img_path)
+        img = passport(img)
+        # cv2.imwrite('./images/results/' + name, img)
+        cv2.imshow(name, img)
+        cv2.waitKey(0)

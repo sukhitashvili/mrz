@@ -21,7 +21,8 @@ def add_mrz_passport(
         birth_date: str = '850101',
         genre: str = 'f',
         expiry_date: str = '261228',
-        id: str = 'ID88933477'):
+        id: str = 'ID88933477',
+        text_size=14):
     '''
     adds MRZ code on input image.
     :param in_image: input opencv image
@@ -36,6 +37,7 @@ def add_mrz_passport(
     :param genre: Genre           Male: 'M', Female: 'F' or Undefined 'X'
     :param expiry_date: Expiry date     YYMMDD
     :param id: Id number       Not mandatory field
+    :param text_size: text pixel size.
     :return: str
     '''
 
@@ -43,7 +45,7 @@ def add_mrz_passport(
     pil_img = Image.fromarray(in_image)
     # Get a drawing context
     draw = ImageDraw.Draw(pil_img)
-    monospace = ImageFont.truetype("./ocrb_regular.ttf", size=14)
+    monospace = ImageFont.truetype("./ocrb_regular.ttf", size=text_size)
     # generate a text
     text = gen_passport_text(doc_type,
                              country,
@@ -74,7 +76,8 @@ def add_mrz_id_card(
         expiry_date: str = '250101',
         nationality: str = 'ESP',
         surname: str = 'ESPAÑOLA ESPAÑOLA',
-        given_name: str = 'CARMEN'):
+        given_name: str = 'CARMEN',
+        text_size=14):
     '''
     generates MRZ for ID cards by input data.
     :param in_image: input image
@@ -88,6 +91,7 @@ def add_mrz_id_card(
     :param nationality: Nationality
     :param surname:  Surname         Special characters will be transliterated
     :param given_name:  Given name(s)   Special characters will be transliterated
+    :param text_size: text pixel size.
     :return:  str of generated MRZ code
     '''
 
@@ -95,7 +99,7 @@ def add_mrz_id_card(
     pil_img = Image.fromarray(in_image)
     # Get a drawing context
     draw = ImageDraw.Draw(pil_img)
-    monospace = ImageFont.truetype("./ocrb_regular.ttf", size=14)
+    monospace = ImageFont.truetype("./ocrb_regular.ttf", size=text_size)
     # generate a text
     text = gen_id_card_text(
         doc_type,  # Document type   Normally 'I' or 'ID' for id cards

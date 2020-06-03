@@ -6,14 +6,16 @@ from typing import Tuple
 kernel = np.ones((5, 5), np.uint8)
 
 
-def inpaint(bgr_image, x_y: Tuple = (50, 200), height_width: Tuple = (100, 300), radius: int = 10):
+def inpaint(bgr_image, x_y: Tuple = (50, 200), width_height: Tuple = (300, 100), radius: int = 10):
     '''
     remove black color text form specified area.
-    :param bgr_image: opencv-python image (BGR);
-    :param x_y: x,y coordinates of top-left part of the text;
-    :param height_width: height and width of the text;
-    :param radius: the parameter for inpainting function;
-    :return: the same size and format image with removed text.
+    Args:
+        bgr_image: opencv-python image (BGR);
+        x_y: x,y coordinates of top-left part of the text;
+        width_height: width and height of the text;
+        radius: the parameter for inpainting function;
+
+    Returns: the same size and format image with removed text.
     '''
     org_width = bgr_image.shape[1]
     org_height = bgr_image.shape[0]
@@ -26,7 +28,7 @@ def inpaint(bgr_image, x_y: Tuple = (50, 200), height_width: Tuple = (100, 300),
     gray_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2GRAY)
     mask = (gray_image < 140).astype('uint8')
     zero_mask = np.zeros(mask.shape, dtype=np.uint8)
-    zero_mask[x_y[1]:(x_y[1]+height_width[0]), x_y[0]:(x_y[0]+height_width[1])] = 1
+    zero_mask[x_y[1]:(x_y[1] + width_height[1]), x_y[0]:(x_y[0] + width_height[0])] = 1
     mask = mask * zero_mask
 
     mask = cv2.dilate(mask, kernel, iterations=1)

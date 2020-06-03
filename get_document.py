@@ -13,6 +13,16 @@ id_img_dir = os.listdir('./images/ids')
 
 
 def passport(bgr_image, x_y: Tuple = (50, 200), width_height: Tuple = (500, 100)):
+    '''
+    added random passport type MRZ to the input image.
+    Args:
+        bgr_image: image.
+        x_y: top-left coordinates of wanted MRZ location.
+        width_height: param of how much long MRZ you want.
+
+    Returns:
+        tuple of: image, top_left coordinate of mrz and width and height of it.
+    '''
     org_width = bgr_image.shape[1]
     org_height = bgr_image.shape[0]
     random_fr_name = names.get_first_name()
@@ -26,7 +36,7 @@ def passport(bgr_image, x_y: Tuple = (50, 200), width_height: Tuple = (500, 100)
     doc_char_number = 44
     extra_scale = 1.41
     text_size = int(
-        np.round((width_height[0]*extra_scale) / doc_char_number))  # in ID's mrz there are 30 chars each line
+        np.round((width_height[0] * extra_scale) / doc_char_number))  # in ID's mrz there are 30 chars each line
 
     img_with_mrz = add_mrz_passport(bgr_image,
                                     coords=x_y,
@@ -56,6 +66,16 @@ def passport(bgr_image, x_y: Tuple = (50, 200), width_height: Tuple = (500, 100)
 
 
 def id_cards(bgr_image, x_y: Tuple = (50, 280), width_height: Tuple = (512, 100)):
+    '''
+    added random ID card MRZ to the input image.
+    Args:
+        bgr_image: image.
+        x_y: top-left coordinates of wanted MRZ location.
+        width_height: param of how much long MRZ you want.
+
+    Returns:
+        tuple of: image, top_left coordinate of mrz and width and height of it.
+    '''
     random_fr_name = names.get_first_name()
     random_ls_name = names.get_last_name()
     doc_number = random_char(3) + random_number(6)
@@ -66,7 +86,7 @@ def id_cards(bgr_image, x_y: Tuple = (50, 280), width_height: Tuple = (512, 100)
     doc_char_number = 30
     extra_scale = 1.35
     text_size = int(
-        np.round((width_height[0]*extra_scale) / doc_char_number))  # in ID's mrz there are 30 chars each line
+        np.round((width_height[0] * extra_scale) / doc_char_number))  # in ID's mrz there are 30 chars each line
 
     img_with_mrz = add_mrz_id_card(bgr_image,
                                    coords=x_y,
